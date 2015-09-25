@@ -1,4 +1,4 @@
-# optimus-video frontend
+# optimus-video backend
 
 ## deploy infromation
 
