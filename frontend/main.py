@@ -25,4 +25,5 @@ class BaseHandler(tornado.web.RequestHandler):
 
 
 class HomeHandler(BaseHandler):
-	self.render("home.html")
+	def get(self):
+		self.render("home.html")
