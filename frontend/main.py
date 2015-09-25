@@ -11,7 +11,9 @@ options.parse_command_line()
 class Application(tornado.web.Application):
 	def __init__(self):
 		handlers = [
-			(r"/ws",WebSocketHandler),
+			(r"/",MainHandler),
+			(r"/home",HomeHandler),
+
 		]
 
 		settings = dict(
@@ -28,6 +30,9 @@ class BaseHandler(tornado.web.RequestHandler):
 	def prepare(self):
 		pass
 
+class MainHandler(BaseHandler):
+	def get(self):
+		self.redirect("/")
 
 class HomeHandler(BaseHandler):
 	def get(self):
