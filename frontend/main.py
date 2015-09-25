@@ -19,7 +19,7 @@ class Application(tornado.web.Application):
 		tornado.web.Application.__init__(self,handlers,**settings)
 
 
-class BaseHandler(tornado.web.requestHandler):
+class BaseHandler(tornado.web.RequestHandler):
 	def prepare(self):
 		pass
 
