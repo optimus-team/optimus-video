@@ -32,7 +32,7 @@ class BaseHandler(tornado.web.RequestHandler):
 
 class MainHandler(BaseHandler):
 	def get(self):
-		self.redirect("/")
+		self.redirect("/home")
 
 class HomeHandler(BaseHandler):
 	def get(self):
