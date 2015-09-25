@@ -1,6 +1,11 @@
 import tornado.web
 import tornado.ioloop
 import tornado.httpserver
+from tornado.options import define,options
+
+
+define("port",default=8080,help="Frontend port",type=int)
+options.parse_command_line()
 
 
 class Application(tornado.web.Application):
@@ -27,3 +32,10 @@ class BaseHandler(tornado.web.RequestHandler):
 class HomeHandler(BaseHandler):
 	def get(self):
 		self.render("home.html")
+
+
+if __name__ == "__main__":
+	http_server = tornado.httpserver.HTTPServer(Application())
+	http_server.listen(options.port)
+	tornado.ioloop.IOLoop.instance().start()
+
