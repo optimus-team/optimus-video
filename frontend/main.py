@@ -15,6 +15,7 @@ class Application(tornado.web.Application):
 		handlers = [
 			(r"/",MainHandler),
 			(r"/home",HomeHandler),
+			(r"/video",VideoHandler)
 
 		]
 
