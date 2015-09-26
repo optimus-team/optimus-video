@@ -47,7 +47,7 @@ class HomeHandler(BaseHandler):
 		data = dict()
 		data["files"] = []
 		for file in files:
-			if "background" not in file
+			if "background" not in file:
 			data["files"].append(file)
 		print data
 		self.render("home.html")
