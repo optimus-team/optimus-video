@@ -42,7 +42,7 @@ class HomeHandler(BaseHandler):
 		self.render("home.html")
 
 class VideoHandler(BaseHandler):
-	def get(self):
+	def post(self):
 		sdp_headers = self.get_argument('sdp',None)
 		with open('$HOME/optimus-video/data','w') as f:
 			f.write(sdp_headers)
