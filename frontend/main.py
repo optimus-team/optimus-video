@@ -44,7 +44,7 @@ class HomeHandler(BaseHandler):
 class VideoHandler(BaseHandler):
 	def post(self):
 		sdp_headers = self.get_argument('sdp',None)
-		with open('$HOME/optimus-video/data','w') as f:
+		with open('/root/optimus-video/data','w') as f:
 			f.write(sdp_headers)
 
 		ts = time.strftime("%Y-%m-%d-%H:%M:%S") + ".mp4"
