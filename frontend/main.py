@@ -31,6 +31,7 @@ def update_pid():
 			p = subprocess.Popen(cmd,stdout=PIPE,stderr=PIPE,shell=True)
 			out,err = p.communicate()
 			print out
+			print cmd
 			pids.remove(pid)
 
 
