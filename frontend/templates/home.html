@@ -1,3 +1,5 @@
+{% set id = 1 %}
+
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
@@ -45,26 +47,24 @@
 	<div class="cd-projects-wrapper">
 		<ul class="cd-slider">
 		<!-- For each -->
-			<li class="current"> <!-- first need a class current, others don't -->
-				<a href="#video-1"> <!-- #video-{{id}} -->
-					<img src="../static/img/thumb.jpg" alt="project image"> 
-					<div class="project-info">
-						<h2>Project 1</h2>
-						<p>Lorem ipsum dolor sit amet.</p>
-					</div>
-				</a>
-			</li>
+			{% for file in file %}
+				{% if id == 1 %}
+					<li class="current"> <!-- first need a class current, others don't -->
+				{% else %}
+					<li>
+				{% end %}
+					<a href="#video-{{id}}"> <!-- #video-{{id}} -->
+						<img src="../static/img/thumb.jpg" alt="project image"> 
+						<div class="project-info">
+							<h2>Project 1</h2>
+							<p>Lorem ipsum dolor sit amet.</p>
+						</div>
+					</a>
+				</li>
+				{% set id = id +1 %}
+			{% end %}
         <!-- end foreach -->
-        
-    		<li> <!-- first need a class current, others don't -->
-				<a href="#video-2"> <!-- #video-{{id}} -->
-					<img src="img/thumb.jpg" alt="project image"> 
-					<div class="project-info">
-						<h2>Project 1</h2>
-						<p>Lorem ipsum dolor sit amet.</p>
-					</div>
-				</a>
-			</li>
+        	
 		</ul>
 
 		<ul class="cd-slider-navigation cd-img-replace">
@@ -74,16 +74,19 @@
 	</div> <!-- .cd-projects-wrapper -->
 
     <!-- Start foreach -->
-	<div class="cd-project-content" id="video-1"> <!-- id="video-{{id}}" -->
-		<div>
-			<video id="player-1" class="video-js vjs-default-skin" controls preload="none" width="100%" height="100%" poster="http://video-js.zencoder.com/oceans-clip.png" data-setup="{}"> <!-- poster = thumbnail  || id="player-{{id}}" -->
-                <source src="http://video-js.zencoder.com/oceans-clip.mp4" type='video/mp4' /> <!-- URL video MP4 -->
-            </video>
+    {% set  id = 0 %}
+    {% for file in files %}
+		<div class="cd-project-content" id="video-{{id}}"> <!-- id="video-{{id}}" -->
+			<div>
+				<video id="player-{{id}}" class="video-js vjs-default-skin" controls preload="none" width="100%" height="100%" poster="http://video-js.zencoder.com/oceans-clip.png" data-setup="{}"> <!-- poster = thumbnail  || id="player-{{id}}" -->
+	                <source src="{{ file }}" type='video/mp4' /> <!-- URL video MP4 -->
+	            </video>
 
-		</div>
-		<a href="#player-1" class="close cd-img-replace">Close</a><!--  id="player-{{id}}" -->
-	</div> 
-
+			</div>
+			<a href="#player-1" class="close cd-img-replace">Close</a><!--  id="player-{{id}}" -->
+		</div> 
+		{% set id = id +1 %}
+	{% end %}
    <!-- end foreach-->
     
 <script src="../static/js/jquery-2.1.4.js"></script>

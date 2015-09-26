@@ -16,11 +16,10 @@ current_port = [5000]
 class Application(tornado.web.Application):
 	def __init__(self):
 		handlers = [
-			(r"/",MainHandler),
-			(r"/home",HomeHandler),
-			(r"/video",VideoHandler),
-			(r"/port",PortHandler)
-
+			(r"/", MainHandler),
+			(r"/home", HomeHandler),
+			(r"/video", VideoHandler),
+			(r"/port", PortHandler),
 		]
 
 		settings = dict(
