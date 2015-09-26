@@ -43,7 +43,7 @@ class MainHandler(BaseHandler):
 
 class HomeHandler(BaseHandler):
 	def get(self):
-		files = list(glob.glob("~/root/optimus-video/data/*.mp4"))
+		files = list(glob.glob("/root/optimus-video/data/*.mp4"))
 		print files
 		self.render("home.html")
 
