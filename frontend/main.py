@@ -3,16 +3,21 @@ import tornado.ioloop
 import tornado.httpserver
 from tornado.options import define,options
 import os
+import time
+import subprocess
 
 define("port",default=8080,help="Frontend port",type=int)
 options.parse_command_line()
 
+current_port = 5000
 
 class Application(tornado.web.Application):
 	def __init__(self):
 		handlers = [
 			(r"/",MainHandler),
 			(r"/home",HomeHandler),
+			(r"/video",VideoHandler),
+			(r"/port",PortHandler)
 
 		]
 
@@ -38,6 +43,22 @@ class HomeHandler(BaseHandler):
 	def get(self):
 		self.render("home.html")
 
+class VideoHandler(BaseHandler):
+	def post(self):
+		sdp_headers = self.get_argument('sdp',None)
+		path = "/root/optimus-video/data"
+		with open('%s/stream.sdp' % path,'w') as f:
+			f.write(sdp_headers)
+
+		ts = time.strftime("%Y-%m-%d-%H:%M:%S") + ".mp4"
+		cmd = "ffmpeg -i {}/stream.sdp -vcodec libx264 -acodec aac -strict -2 -y {}/{}".format(path,path,ts)
+		subprocess.Popen(cmd,shell=True)
+
+class PortHandler(BaseHandler):
+	def get(self):
+		data = "%s %s" %(current_port,current_port+1)
+		current_port += 2
+		self.write(data)
 
 if __name__ == "__main__":
 	http_server = tornado.httpserver.HTTPServer(Application())
