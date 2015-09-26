@@ -65,7 +65,7 @@ class VideoHandler(BaseHandler):
 
 class PortHandler(BaseHandler):
 	def get(self):
-		data = "%s %s" %(current_port[0],current_port[0]+1)
+		data = "%s %s" %(current_port[0],current_port[0]+2)
 		current_port[0] += 2
 		if(current_port[0] >= 5500):
 			current_port[0] = 5000
