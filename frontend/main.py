@@ -9,13 +9,15 @@ import subprocess
 define("port",default=8080,help="Frontend port",type=int)
 options.parse_command_line()
 
+current_port = 5000
 
 class Application(tornado.web.Application):
 	def __init__(self):
 		handlers = [
 			(r"/",MainHandler),
 			(r"/home",HomeHandler),
-			(r"/video",VideoHandler)
+			(r"/video",VideoHandler),
+			(r"/port",PortHandler)
 
 		]
 
@@ -52,6 +54,11 @@ class VideoHandler(BaseHandler):
 		cmd = "ffmpeg -i {}/stream.sdp -vcodec libx264 -acodec aac -strict -2 -y {}/{}".format(path,path,ts)
 		subprocess.Popen(cmd,shell=True)
 
+class PortHandler(BaseHandler):
+	def get(self):
+		data = "%s %s" %(current_port,current_port+1)
+		current_port += 2
+		self.write(data)
 
 if __name__ == "__main__":
 	http_server = tornado.httpserver.HTTPServer(Application())
