@@ -1,7 +1,7 @@
 # optimus-video android app
 
-## build infromation
+Android Studio project provided.
 
-```
-ant .
-```
+Uses https://github.com/fyhertz/libstreaming for streaming.
+
+Supports Android >= 5.0
