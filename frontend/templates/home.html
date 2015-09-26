@@ -11,9 +11,11 @@
 	<link rel="stylesheet" href="../static/css/reset.css"> <!-- CSS reset -->
 	<link rel="stylesheet" href="../static/css/style.css"> <!-- Resource style -->
     <link rel="stylesheet" href="../static/css/video-js.css"> <!-- Resource style -->
+    <script src="../static/css/bigvideo.css"></script>
 	<script src="../static/js/modernizr.js"></script> <!-- Modernizr -->
   	<!-- video.js HTML5 Video Player -->
     <script src="../static/js/video.js"></script>
+
     <!-- video.js SWF Video Player -->
     <script>
         videojs.options.flash.swf = "video-js.swf";
@@ -24,15 +26,14 @@
 <body>
 	<div class="cd-intro-block">
         <div id="video-landing">
-            <video preload loop id="video_bg" muted class="video-js vjs-default-skin" width="100%" height="100%" poster="http://video-js.zencoder.com/oceans-clip.png"   data-setup=''>
-                <source src="../static/video/background.mp4" type='video/mp4' />
-            </video>
+            
         </div>
         <div id="overlay"></div>
 		<div class="content-wrapper">
 			<h1>Optimus Video</h1>
 			<a href="#0" class='cd-btn' data-action="show-projects">View my Videos</a>
-            
+            <!--<a href="#"><img src="../static/img/appstore.png"></a>--><br>
+            <a href="/demo.apk" style="padding-top:20px;"><img src="../static/img/playstore.png"></a>
             <div id="social-media">
                 <ul>
                     <li class="social-icon fb"><a href=""><i class="fa icon-facebook"></i></a></li>
@@ -91,6 +92,17 @@
     
 <script src="../static/js/jquery-2.1.4.js"></script>
 <script src="../static/js/jquery.mobile.custom.min.js"></script>
+<script src="../static/js/bigvideo.js"></script>
 <script src="../static/js/main.js"></script> <!-- Resource jQuery -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-68142418-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
 </body>
 </html>
