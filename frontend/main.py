@@ -22,6 +22,7 @@ pids  = []
 def update_pid():
 	for pid in pids:
 		id,path,ts = pid
+		print id
 		p = subprocess.Popen("ps -p %s" %id,stdout=PIPE,stderr=PIPE)
 		out,err = p.communicate()
 		if not (id in out):
