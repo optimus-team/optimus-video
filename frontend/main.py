@@ -58,6 +58,8 @@ class PortHandler(BaseHandler):
 	def get(self):
 		data = "%s %s" %(current_port,current_port+1)
 		current_port += 2
+		if(current_port >= 5500):
+			current_port = 5000
 		self.write(data)
 
 if __name__ == "__main__":
