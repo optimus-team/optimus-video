@@ -14,6 +14,11 @@ options.parse_command_line()
 current_port = [5000]
 
 pids  = []
+
+def update_pid():
+	print "Checking"
+
+
 class Application(tornado.web.Application):
 	def __init__(self):
 		handlers = [
@@ -78,5 +83,7 @@ class PortHandler(BaseHandler):
 if __name__ == "__main__":
 	http_server = tornado.httpserver.HTTPServer(Application())
 	http_server.listen(options.port)
+
+	IOLoop.instance().add_timeout(timedelta(seconds=1),update_pid)
 	tornado.ioloop.IOLoop.instance().start()
 
