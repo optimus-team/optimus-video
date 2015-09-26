@@ -6,6 +6,7 @@ import os
 import time
 import subprocess
 import glob
+from subprocess import PIPE
 
 define("port",default=8080,help="Frontend port",type=int)
 options.parse_command_line()
@@ -55,7 +56,7 @@ class VideoHandler(BaseHandler):
 
 		ts = time.strftime("%Y-%m-%d-%H:%M:%S") + ".mp4"
 		cmd = "ffmpeg -i {}/stream.sdp -vcodec libx264 -acodec aac -strict -2 -y {}/{}".format(path,path,ts)
-		subprocess.Popen(cmd,shell=True)
+		subprocess.Popen(cmd,stdout=PIPE,stderr=PIPE,shell=True)
 
 class PortHandler(BaseHandler):
 	def get(self):
