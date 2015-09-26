@@ -27,7 +27,7 @@ def update_pid():
 		out,err = p.communicate()
 		print id,out
 		if not (str(id) in out):
-			cmd = "avconv -ss 00:00:02 -i %s/%s.mp4 -vsync 1 -t 0.01 out.jpg" % (path,ts)
+			cmd = "avconv -ss 00:00:02 -i %s/%s.mp4 -vsync 1 -t 0.01 %s/out.jpg" % (path,ts,path)
 			p = subprocess.Popen(cmd,stdout=PIPE,stderr=PIPE,shell=True)
 			out,err = p.communicate()
 			print out
