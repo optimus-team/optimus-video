@@ -43,8 +43,9 @@ class MainHandler(BaseHandler):
 
 class HomeHandler(BaseHandler):
 	def get(self):
-		files = list(glob.glob("/root/optimus-video/data/*.mp4"))
-		print files
+		files = glob.glob("/root/optimus-video/data/*.mp4")
+		for file in files:
+			print file
 		self.render("home.html")
 
 class VideoHandler(BaseHandler):
@@ -57,6 +58,7 @@ class VideoHandler(BaseHandler):
 		ts = time.strftime("%Y-%m-%d-%H:%M:%S") + ".mp4"
 		cmd = "ffmpeg -i {}/stream.sdp -vcodec libx264 -acodec aac -strict -2 -y {}/{}".format(path,path,ts)
 		subprocess.Popen(cmd,stdout=PIPE,stderr=PIPE,shell=True)
+
 
 class PortHandler(BaseHandler):
 	def get(self):
