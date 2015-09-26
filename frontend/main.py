@@ -61,7 +61,7 @@ class VideoHandler(BaseHandler):
 		ts = time.strftime("%Y_%m_%d_%H_%M_%S")
 		cmd = "ffmpeg -i {}/stream.sdp -vcodec libx264 -acodec aac -strict -2 -y {}/{}.mp4 && \
 				avconv -ss 00:00:02 -i %s/%s.mp4 -vsync 1 -t 0.01 %s/%s.jpg".format(path,path,ts,path,ts,path,ts)
-		subprocess.Popen(cmd,stdout=PIPE,stderr=PIPE,shell=True)
+		subprocess.Popen(cmd.split(" "),stdout=PIPE,stderr=PIPE,shell=True)
 
 
 class PortHandler(BaseHandler):
