@@ -200,5 +200,5 @@ jQuery(document).ready(function(){
 		});
 	}
     //initialize header video
-    videojs('video_bg').play();
+    videojs('video_bg').play().volume(0);
 });

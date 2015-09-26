@@ -52,7 +52,7 @@ Patterns - reusable parts of our design
 	background-color: $color-2;
 	box-shadow: 0 1px 20px rgba($color-2, .2), inset 0 1px 0 rgba(#fff, .4);
 
-	color: $color-4;
+	color: $color-5;
 	font-size: 1.3rem;
 	font-weight: bold;
 	text-transform: uppercase;
@@ -589,6 +589,14 @@ fontawesome
     height: 100%;
     background-size: cover; 
     z-index: -2;
+}
+@media(max-width:768px){
+    .cd-intro-block{
+        background: url('../img/back.jpg') no-repeat center center;
+    }
+    #video-landing{
+        display: none
+    }   
 }
 #overlay{
     position: fixed;

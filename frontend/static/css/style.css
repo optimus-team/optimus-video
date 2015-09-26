@@ -33,7 +33,7 @@ Patterns - reusable parts of our design
   border-radius: 50em;
   background-color: #f64235;
   box-shadow: 0 1px 20px rgba(246, 66, 53, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.4);
-  color: rgba(0, 0, 0, 0.87059);
+  color: #ffffff;
   font-size: 1.3rem;
   font-weight: bold;
   text-transform: uppercase;
@@ -713,6 +713,12 @@ fontawesome
   background-size: cover;
   z-index: -2; }
 
+@media (max-width: 768px) {
+  .cd-intro-block {
+    background: url("../img/back.jpg") no-repeat center center; }
+
+  #video-landing {
+    display: none; } }
 #overlay {
   position: fixed;
   width: 100%;
