@@ -47,6 +47,7 @@ Patterns - reusable parts of our design
 .cd-btn {
 	display: inline-block;
 	padding: 1.4em 2em;
+    margin-bottom: 20px;
 
 	border-radius: 50em;
 	background-color: $color-2;
@@ -583,6 +584,7 @@ fontawesome
 //video
 #video-landing{
     position: fixed;
+    overflow: hidden;
     top: 0;
     left: 0;
     width: 100%;

@@ -200,5 +200,12 @@ jQuery(document).ready(function(){
 		});
 	}
     //initialize header video
-    videojs('video_bg').play().volume(0);
+    //videojs('video_bg').play().volume(0);
+    var BV = new $.BigVideo({container: $('#video-landing')});
+	BV.init();
+	if (Modernizr.touch) {
+	    BV.show('../static/img/back.jpg');
+	} else {
+	    BV.show('../static/video/background.mp4',{ambient:true});
+	}
 });
