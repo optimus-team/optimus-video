@@ -70,7 +70,7 @@ class HomeHandler(BaseHandler):
 		data["files"] = []
 		for file in files:
 			if "background" not in file:
-				data["files"].append(file.replace(".mp4",""))
+				data["files"].append(file.replace(".mp4","").replace("static/video/",""))
 		print data
 		self.render("home.html",**data)
 
