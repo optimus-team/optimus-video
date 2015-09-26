@@ -44,11 +44,12 @@ class HomeHandler(BaseHandler):
 class VideoHandler(BaseHandler):
 	def post(self):
 		sdp_headers = self.get_argument('sdp',None)
-		with open('/root/optimus-video/data/stream.sdp','w') as f:
+		path = "/root/optimus-video/data"
+		with open('%s/stream.sdp' % path,'w') as f:
 			f.write(sdp_headers)
 
 		ts = time.strftime("%Y-%m-%d-%H:%M:%S") + ".mp4"
-		cmd = "ffmpeg -i stream.sdp -vcodec libx264 -acodec aac -strict -2 -y ~/tmp/video/{}".format(ts)
+		cmd = "ffmpeg -i {}/stream.sdp -vcodec libx264 -acodec aac -strict -2 -y ~/{}/{}".format(path,path,ts)
 		subprocess.Popen(cmd,shell=True)
 
 
