@@ -48,7 +48,7 @@ class HomeHandler(BaseHandler):
 		data["files"] = []
 		for file in files:
 			if "background" not in file:
-			data["files"].append(file)
+				data["files"].append(file)
 		print data
 		self.render("home.html")
 
