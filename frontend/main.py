@@ -11,7 +11,7 @@ from subprocess import PIPE
 define("port",default=8080,help="Frontend port",type=int)
 options.parse_command_line()
 
-current_port = 5000
+current_port = [5000]
 
 class Application(tornado.web.Application):
 	def __init__(self):
@@ -50,7 +50,7 @@ class HomeHandler(BaseHandler):
 			if "background" not in file:
 				data["files"].append(file)
 		print data
-		self.render("home.html")
+		self.render("home.html",**data)
 
 class VideoHandler(BaseHandler):
 	def post(self):
@@ -66,10 +66,10 @@ class VideoHandler(BaseHandler):
 
 class PortHandler(BaseHandler):
 	def get(self):
-		data = "%s %s" %(current_port,current_port+1)
-		current_port += 2
-		if(current_port >= 5500):
-			current_port = 5000
+		data = "%s %s" %(current_port[0],current_port[0]+1)
+		current_port[0] += 2
+		if(current_port[0] >= 5500):
+			current_port[0] = 5000
 		self.write(data)
 
 if __name__ == "__main__":
