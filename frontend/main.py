@@ -44,8 +44,12 @@ class MainHandler(BaseHandler):
 class HomeHandler(BaseHandler):
 	def get(self):
 		files = glob.glob("static/video/*.mp4")
+		data = dict()
+		data["files"] = []
 		for file in files:
-			print file
+			if "background" not in file
+			data["files"].append(file)
+		print data
 		self.render("home.html")
 
 class VideoHandler(BaseHandler):
