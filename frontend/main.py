@@ -49,7 +49,7 @@ class VideoHandler(BaseHandler):
 
 		ts = time.strftime("%Y-%m-%d-%H:%M:%S") + ".mp4"
 		cmd = "ffmpeg -i stream.sdp -vcodec libx264 -acodec aac -strict -2 -y ~/tmp/video/{}".format(ts)
-		supbrocess.Popen(cmd,shell=True)
+		subprocess.Popen(cmd,shell=True)
 
 
 if __name__ == "__main__":
