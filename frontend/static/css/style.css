@@ -1,8 +1,15 @@
+@charset "UTF-8";
 /* -------------------------------- 
 
 Primary style
 
 -------------------------------- */
+@font-face {
+  font-family: 'optimus';
+  src: url("/font/optimus.eot");
+  /* IE9 Compat Modes */
+  src: url("/font/optimus.eot?#iefix") format("embedded-opentype"), url("/font/optimus.woff2") format("woff2"), url("/font/optimus.woff") format("woff"), url("/font/optimus.ttf") format("truetype"), url("/font/optimus.svg#svgoptimus") format("svg");
+  /* Legacy iOS */ }
 *, *::after, *::before {
   box-sizing: border-box; }
 
@@ -675,6 +682,7 @@ fontawesome
   font-style: normal;
   font-weight: normal;
   speak: none;
+  color: #ebebeb;
   display: inline-block;
   text-decoration: inherit;
   width: 1em;
@@ -697,17 +705,47 @@ fontawesome
   /* Uncomment for 3D effect */
   /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */ }
 
+.icon-download:before {
+  content: '\e800'; }
+
+/* 'юаА' */
+.icon-play:before {
+  content: '\e801'; }
+
+/* 'юаБ' */
+.icon-facebook:before {
+  content: '\e802'; }
+
+/* 'юаВ' */
+.icon-vkontakte:before {
+  content: '\e803'; }
+
+/* 'юаГ' */
+.icon-twitter:before {
+  content: '\e804'; }
+
+/* 'юаД' */
+.icon-github:before {
+  content: '\e805'; }
+
+/* 'юаЕ' */
+.icon-cancel:before {
+  content: '\e806'; }
+
+/* 'юаЖ' */
 #social-media {
-  bottom: 20px; }
+  bottom: 30px;
+  width: 100%;
+  position: absolute; }
 
 #social-media .social-icon {
-  color: #fff;
-  font-size: 2em;
+  color: #ebebeb;
+  font-size: 1.5em;
   display: inline-block; }
 
 #video-landing {
   position: fixed;
-    overflow: hidden;
+  overflow: hidden;
   top: 0;
   left: 0;
   width: 100%;

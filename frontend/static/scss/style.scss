@@ -12,6 +12,16 @@ Primary style
 
 -------------------------------- */
 
+@font-face { 
+  font-family: 'optimus';
+  src: url('/font/optimus.eot'); /* IE9 Compat Modes */
+  src: url('/font/optimus.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('/font/optimus.woff2') format('woff2'), /* Super Modern Browsers */
+       url('/font/optimus.woff') format('woff'), /* Pretty Modern Browsers */
+       url('/font/optimus.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('/font/optimus.svg#svgoptimus') format('svg'); /* Legacy iOS */
+}
+
 *, *::after, *::before {
 	box-sizing: border-box;
 }
@@ -543,7 +553,7 @@ fontawesome
       font-style: normal;
       font-weight: normal;
       speak: none;
-     
+      color: $color-3;
       display: inline-block;
       text-decoration: inherit;
       width: 1em;
@@ -572,13 +582,23 @@ fontawesome
       /* Uncomment for 3D effect */
       /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
     }
+ 
+.icon-download:before { content: '\e800'; } /* '' */
+.icon-play:before { content: '\e801'; } /* '' */
+.icon-facebook:before { content: '\e802'; } /* '' */
+.icon-vkontakte:before { content: '\e803'; } /* '' */
+.icon-twitter:before { content: '\e804'; } /* '' */
+.icon-github:before { content: '\e805'; } /* '' */
+.icon-cancel:before { content: '\e806'; } /* '' */
 //social
 #social-media{
-    bottom: 20px;
+    bottom: 30px;
+    width: 100%;
+    position: absolute;
 }
 #social-media .social-icon{
-    color: #fff;
-    font-size: 2em;
+    color: $color-3;
+    font-size: 1.5em;
     display: inline-block;
 }
 //video
