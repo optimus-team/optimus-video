@@ -55,7 +55,7 @@
 					<li>
 				{% end %}
 					<a href="#video-{{id}}"> <!-- #video-{{id}} -->
-						<img src="{{ /static/video/file }}.jpg" alt="project image"> 
+						<img src="/static/video/{{ file }}.jpg" alt="project image"> 
 						<div class="project-info">
 							<h2>{{ file }}</h2>
 							<p>Lorem ipsum dolor sit amet.</p>
@@ -79,12 +79,12 @@
     {% for file in files %}
 		<div class="cd-project-content" id="video-{{id}}"> <!-- id="video-{{id}}" -->
 			<div>
-				<video id="player-{{id}}" class="video-js vjs-default-skin" controls preload="none" width="100%" height="100%" poster="{{ /static/video/file }}.jpg" data-setup="{}"> <!-- poster = thumbnail  || id="player-{{id}}" -->
-	                <source src="{{ /static/video/file }}.mp4" type='video/mp4' /> <!-- URL video MP4 -->
+				<video id="player-{{id}}" class="video-js vjs-default-skin" controls preload="none" width="100%" height="100%" poster="/static/video/{{ file }}.jpg" data-setup="{}"> <!-- poster = thumbnail  || id="player-{{id}}" -->
+	                <source src="/static/video/{{ file }}.mp4" type='video/mp4' /> <!-- URL video MP4 -->
 	            </video>
 
 			</div>
-			<a href="#player-1" class="close cd-img-replace">Close</a><!--  id="player-{{id}}" -->
+			<a href="#player-{{ id }}" class="close cd-img-replace">Close</a><!--  id="player-{{id}}" -->
 		</div> 
 		{% set id = id +1 %}
 	{% end %}
