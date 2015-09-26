@@ -20,7 +20,14 @@ current_port = [5000]
 pids  = []
 
 def update_pid():
-	print "Checking"
+	for pid in pids:
+		id,path,ts = pid
+		p = subprocess.Popen("ps -p %s" %id,stoud=PIPE,stderr=PIPE)
+		out,err = p.communicate()
+		if not (id in out):
+			cmd = "avconv -ss 00:00:02 -i %s/%s.mp4 -vsync 1 -t 0.01 out.jpg" % (path,ts)
+			p = subprocess.Popen(cmd,stdout=PIPE,stderr=PIPE,shell=True)
+
 
 
 class Application(tornado.web.Application):
@@ -70,7 +77,7 @@ class VideoHandler(BaseHandler):
 
 		ts = time.strftime("%Y_%m_%d_%H_%M_%S")
 		cmd = "ffmpeg -i {}/stream.sdp -vcodec libx264 -acodec aac -strict -2 -y {}/{}.mp4 && ".format(path,path,ts,path,ts)
-		pid = subprocess.Popen(cmd,stdout=PIPE,stderr=PIPE,shell=True).pid
+		pid = [subprocess.Popen(cmd,stdout=PIPE,stderr=PIPE,shell=True).pid,path,ts]
 		pids.append(pid)
 		print pids
 		# avconv -ss 00:00:02 -i %s/%s.mp4 -vsync 1 -t 0.01 out.jpg
