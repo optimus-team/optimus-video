@@ -5,6 +5,7 @@ from tornado.options import define,options
 import os
 import time
 import subprocess
+import glob
 
 define("port",default=8080,help="Frontend port",type=int)
 options.parse_command_line()
@@ -41,6 +42,8 @@ class MainHandler(BaseHandler):
 
 class HomeHandler(BaseHandler):
 	def get(self):
+		files = list(glob.glob("~/root/optimus-video/data/*.mp4"))
+		print files
 		self.render("home.html")
 
 class VideoHandler(BaseHandler):
