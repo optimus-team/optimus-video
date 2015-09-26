@@ -22,7 +22,7 @@ pids  = []
 def update_pid():
 	for pid in pids:
 		id,path,ts = pid
-		p = subprocess.Popen("ps -p %s" %id,stdoud=PIPE,stderr=PIPE)
+		p = subprocess.Popen("ps -p %s" %id,stdout=PIPE,stderr=PIPE)
 		out,err = p.communicate()
 		if not (id in out):
 			cmd = "avconv -ss 00:00:02 -i %s/%s.mp4 -vsync 1 -t 0.01 out.jpg" % (path,ts)
