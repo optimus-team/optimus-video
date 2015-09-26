@@ -571,7 +571,15 @@ fontawesome
       /* Uncomment for 3D effect */
       /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
     }
-
+//social
+#social-media{
+    bottom: 20px;
+}
+#social-media .social-icon{
+    color: #fff;
+    font-size: 2em;
+    display: inline-block;
+}
 //video
 #video-landing{
     position: fixed;

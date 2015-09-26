@@ -54,7 +54,7 @@ jQuery(document).ready(function(){
 		event.preventDefault();
 		singleProjectContent.removeClass('is-visible');
         var video_id = $(this).attr('href');
-            videojs(video_id).stop();
+            videojs(video_id).pause();
         
 	});
 
@@ -199,4 +199,6 @@ jQuery(document).ready(function(){
 			'transform': 'translateX(-' + translate + ')',
 		});
 	}
+    //initialize header video
+    videojs('video_bg').play();
 });

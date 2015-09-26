@@ -16,7 +16,7 @@ body {
   background-color: #ebebeb; }
 
 a {
-  color: #eebb00;
+  color: #f64235;
   text-decoration: none; }
 
 img {
@@ -31,8 +31,8 @@ Patterns - reusable parts of our design
   display: inline-block;
   padding: 1.4em 2em;
   border-radius: 50em;
-  background-color: #eebb00;
-  box-shadow: 0 1px 20px rgba(238, 187, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  background-color: #f64235;
+  box-shadow: 0 1px 20px rgba(246, 66, 53, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.4);
   color: rgba(0, 0, 0, 0.87059);
   font-size: 1.3rem;
   font-weight: bold;
@@ -42,7 +42,7 @@ Patterns - reusable parts of our design
   -moz-transition: box-shadow 0.2s;
   transition: box-shadow 0.2s; }
   .no-touch .cd-btn:hover {
-    box-shadow: 0 1px 30px rgba(238, 187, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.4); }
+    box-shadow: 0 1px 30px rgba(246, 66, 53, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.4); }
 
 .cd-img-replace {
   /* replace text with image */
@@ -695,6 +695,14 @@ fontawesome
   -moz-osx-font-smoothing: grayscale;
   /* Uncomment for 3D effect */
   /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */ }
+
+#social-media {
+  bottom: 20px; }
+
+#social-media .social-icon {
+  color: #fff;
+  font-size: 2em;
+  display: inline-block; }
 
 #video-landing {
   position: fixed;
