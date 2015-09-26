@@ -84,6 +84,6 @@ if __name__ == "__main__":
 	http_server = tornado.httpserver.HTTPServer(Application())
 	http_server.listen(options.port)
 
-	tornado.IOLoop.instance().add_timeout(timedelta(seconds=1),update_pid)
+	tornado.ioloop.IOLoop.instance().add_timeout(timedelta(seconds=1),update_pid)
 	tornado.ioloop.IOLoop.instance().start()
 
