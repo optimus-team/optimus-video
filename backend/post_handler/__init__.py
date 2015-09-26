@@ -10,10 +10,12 @@ def hello():
 
     with open('./stream.sdp', 'w') as f:
         f.write(sdp_headers)
-    cmd = "ffmpeg -i stream.sdp -vcodec libx264 -acodec aac -strict -2 -y ~/tmp/out.mp4 &"
-    import os
-    #  os.spawnl(os.P_DETACH, cmd)
-    os.system(cmd)
+
+    import time
+    ts = time.strftime("%Y-%m-%d-%H:%M:%S") + '.mp4'
+    cmd = "ffmpeg -i stream.sdp -vcodec libx264 -acodec aac -strict -2 -y ~/tmp/video/{}".format(ts)
+    import subprocess
+    subprocess.Popen(cmd, shell=True) # it's async
 
     return 'ok'
 
