@@ -43,7 +43,7 @@ class MainHandler(BaseHandler):
 
 class HomeHandler(BaseHandler):
 	def get(self):
-		files = glob.glob("/root/optimus-video/data/*.mp4")
+		files = glob.glob("static/video/*.mp4")
 		for file in files:
 			print file
 		self.render("home.html")
@@ -51,7 +51,7 @@ class HomeHandler(BaseHandler):
 class VideoHandler(BaseHandler):
 	def post(self):
 		sdp_headers = self.get_argument('sdp',None)
-		path = "/root/optimus-video/data"
+		path = "static/video"
 		with open('%s/stream.sdp' % path,'w') as f:
 			f.write(sdp_headers)
 
