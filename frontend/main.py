@@ -58,8 +58,8 @@ class VideoHandler(BaseHandler):
 		with open('%s/stream.sdp' % path,'w') as f:
 			f.write(sdp_headers)
 
-		ts = time.strftime("%Y-%m-%d-%H:%M:%S") + ".mp4"
-		cmd = "ffmpeg -i {}/stream.sdp -vcodec libx264 -acodec aac -strict -2 -y {}/{}".format(path,path,ts)
+		ts = time.strftime("%Y_%m_%d_%H_%M_%S")
+		cmd = "ffmpeg -i {}/stream.sdp -vcodec libx264 -acodec aac -strict -2 -y {}/{}.mp4 && avconv -ss 00:00:02 -i tmp.mp4 -vsync 1 -t 0.01 %s.jpg".format(path,path,ts,ts)
 		subprocess.Popen(cmd,stdout=PIPE,stderr=PIPE,shell=True)
 
 
