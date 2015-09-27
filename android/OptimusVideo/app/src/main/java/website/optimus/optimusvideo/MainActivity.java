@@ -4,17 +4,17 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
-import android.hardware.Camera;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Display;
-import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import net.majorkernelpanic.streaming.Session;
@@ -23,15 +23,26 @@ import net.majorkernelpanic.streaming.audio.AudioQuality;
 import net.majorkernelpanic.streaming.gl.SurfaceView;
 import net.majorkernelpanic.streaming.video.VideoQuality;
 
-public class MainActivity extends Activity implements Session.Callback, SurfaceHolder.Callback {
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.Scanner;
+
+public class MainActivity extends AppCompatActivity implements Session.Callback, SurfaceHolder.Callback {
 
     private final static String TAG = "MainActivity";
 
     private TextView mText;
-    private Button mStartButton, mSwitchCamera;
+    private ImageButton mStartButton;
+    private Button mSwitchCamera;
     private SurfaceView mSurfaceView;
     private EditText mEditText;
     private Session mSession;
+    private ProgressBar mProgress;
+    private TextView mStatus;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +51,13 @@ public class MainActivity extends Activity implements Session.Callback, SurfaceH
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        mStartButton = (Button) findViewById(R.id.start_button);
+        mStatus = (TextView) findViewById(R.id.status);
+        mStartButton = (ImageButton) findViewById(R.id.start_button);
         mSwitchCamera = (Button) findViewById(R.id.switch_camera);
         mSurfaceView = (SurfaceView) findViewById(R.id.surface);
         mEditText = (EditText) findViewById(R.id.editText1);
         mText = (TextView) findViewById(R.id.text);
+        mProgress = (ProgressBar) findViewById(R.id.progress);
 
         mSession = SessionBuilder.getInstance()
                 .setCallback(this)
@@ -52,15 +65,19 @@ public class MainActivity extends Activity implements Session.Callback, SurfaceH
                 .setSurfaceView(mSurfaceView)
                 .setContext(getApplicationContext())
                 .setAudioEncoder(SessionBuilder.AUDIO_AAC)
-                .setAudioQuality(new AudioQuality(16000, 32000))
-                .setVideoEncoder(SessionBuilder.VIDEO_H264)
-                .setVideoQuality(new VideoQuality(320, 240, 24, 200000))
+                .setAudioQuality(new AudioQuality(16000, 16000))
+                .setVideoEncoder(SessionBuilder.VIDEO_H263)
+                .setVideoQuality(new VideoQuality(640, 480, 15, 60000))
                 .build();
 
         mStartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onStartButtonClicked();
+                try {
+                    onStartButtonClicked();
+                } catch (IOException e) {
+                    onSessionError(0, 0, e);
+                }
             }
         });
         mSwitchCamera.setOnClickListener(new View.OnClickListener() {
@@ -74,20 +91,26 @@ public class MainActivity extends Activity implements Session.Callback, SurfaceH
 
     }
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-//        mSession.setPreviewOrientation(getRotation());
+
+    static final String SERVER_URL = "http://optimus.website:80";
+
+    int[] getPorts() throws IOException {
+        URL url = new URL(SERVER_URL + "/port");
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        Scanner in = new Scanner(connection.getInputStream());
+        return new int[]{in.nextInt(), in.nextInt()};
     }
 
-    public void onStartButtonClicked() {
+    public void onStartButtonClicked() throws IOException {
         // Starts/stops streaming
         mSession.setDestination(mEditText.getText().toString());
         if (!mSession.isStreaming()) {
-            int cam = mSession.getCamera();
-            mSession.configure();
+            postData();
         } else {
             mSession.stop();
+//            mSession.stopPreview();
+            mStartButton.setImageResource(R.drawable.ic_cam_inactive);
+            setStatus("Not recording ^^");
         }
         mStartButton.setEnabled(false);
     }
@@ -101,9 +124,9 @@ public class MainActivity extends Activity implements Session.Callback, SurfaceH
     public void onResume() {
         super.onResume();
         if (mSession.isStreaming()) {
-            mStartButton.setText("Stop");
+            mStartButton.setImageResource(R.drawable.ic_cam_active);
         } else {
-            mStartButton.setText("Start");
+            mStartButton.setImageResource(R.drawable.ic_cam_inactive);
         }
     }
 
@@ -148,14 +171,14 @@ public class MainActivity extends Activity implements Session.Callback, SurfaceH
     public void onSessionStarted() {
         Log.d(TAG, "Session started.");
         mStartButton.setEnabled(true);
-        mStartButton.setText("Stop");
+        mStartButton.setImageResource(R.drawable.ic_cam_active);
     }
 
     @Override
     public void onSessionStopped() {
         Log.d(TAG, "Session stopped.");
         mStartButton.setEnabled(true);
-        mStartButton.setText("Start");
+        mStartButton.setImageResource(R.drawable.ic_cam_inactive);
     }
 
     /**
@@ -172,40 +195,6 @@ public class MainActivity extends Activity implements Session.Callback, SurfaceH
         dialog.show();
     }
 
-    public static void setCameraDisplayOrientation(Activity activity,
-                                                   int cameraId, android.hardware.Camera camera) {
-        android.hardware.Camera.CameraInfo info =
-                new android.hardware.Camera.CameraInfo();
-        android.hardware.Camera.getCameraInfo(cameraId, info);
-        int rotation = activity.getWindowManager().getDefaultDisplay()
-                .getRotation();
-        int degrees = 0;
-        switch (rotation) {
-            case Surface.ROTATION_0:
-                degrees = 0;
-                break;
-            case Surface.ROTATION_90:
-                degrees = 90;
-                break;
-            case Surface.ROTATION_180:
-                degrees = 180;
-                break;
-            case Surface.ROTATION_270:
-                degrees = 270;
-                break;
-        }
-
-        int result;
-        if (info.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
-            result = (info.orientation + degrees) % 360;
-            result = (360 - result) % 360;  // compensate the mirror
-        } else {  // back-facing
-            result = (info.orientation - degrees + 360) % 360;
-        }
-        camera.setDisplayOrientation(result);
-    }
-
-
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width,
                                int height) {
@@ -219,42 +208,6 @@ public class MainActivity extends Activity implements Session.Callback, SurfaceH
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         mSession.stop();
-    }
-
-    int getRotation() {
-        Display display = getWindowManager().getDefaultDisplay();
-        int rotation = display.getRotation();
-        if (rotation == Surface.ROTATION_0) {
-            return 0;
-        }
-        if (rotation == Surface.ROTATION_90) {
-            return 90;
-        }
-        if (rotation == Surface.ROTATION_180) {
-            return 180;
-        }
-        if (rotation == Surface.ROTATION_270) {
-            return 270;
-        }
-        throw new Error("Don't know rotation " + rotation);
-    }
-
-    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
-
-    private void hideUi() {
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_LOW_PROFILE
-                | View.SYSTEM_UI_FLAG_IMMERSIVE);
-    }
-
-    private void showUi() {
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
     }
 
     @Override
@@ -271,4 +224,85 @@ public class MainActivity extends Activity implements Session.Callback, SurfaceH
         }
     }
 
+
+    public void postData() {
+        new AsyncTask<Void, String, Exception>() {
+
+            @Override
+            protected void onPreExecute() {
+                mProgress.setVisibility(View.VISIBLE);
+                mStartButton.setVisibility(View.GONE);
+            }
+
+            @Override
+            protected Exception doInBackground(Void... voids) {
+                try {
+                    publishProgress("Getting ports...");
+                    int[] ports = getPorts();
+                    mSession.setVideoPort(ports[0]);
+                    mSession.setAudioPort(ports[1]);
+                    publishProgress("PORTS " + ports[0] + " " + ports[1] + ". Configuring session");
+                    mSession.configure();
+                    publishProgress("Sleep for a while...");
+                    Thread.sleep(250);
+                    String data = "sdp=" +
+                            URLEncoder.encode(mSession.getSessionDescription(), "UTF-8");
+
+                    URL url = new URL(SERVER_URL + "/video");
+                    publishProgress("Making connection to " + url);
+                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+                    connection.setDoOutput(true);
+                    connection.setRequestMethod("POST");
+
+                    connection.setFixedLengthStreamingMode(data.getBytes().length);
+                    connection.setRequestProperty("Content-Type",
+                            "application/x-www-form-urlencoded");
+                    PrintWriter out = new PrintWriter(connection.getOutputStream());
+                    out.print(data);
+                    out.close();
+
+                    publishProgress("Wrote POST");
+
+                    connection.getResponseMessage();
+
+                    publishProgress("Got response");
+
+                    connection.disconnect();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return e;
+                }
+                return null;
+            }
+
+            @Override
+            protected void onProgressUpdate(String... values) {
+                setStatus(values[0]);
+            }
+
+
+            @Override
+            protected void onPostExecute(Exception e) {
+                if (e == null) {
+                    setStatus("No errors. R E C O R D I N G");
+//                    onSessionError(0, 0, new Exception("No errors ^^"));
+                    mStartButton.setImageResource(R.drawable.ic_cam_active);
+                } else {
+                    setStatus("N O T recording: " + e.getMessage());
+                    mSession.stop();
+                    mStartButton.setImageResource(R.drawable.ic_cam_inactive);
+                    onSessionError(0, 0, e);
+                    e.printStackTrace();
+                }
+                mProgress.setVisibility(View.GONE);
+                mStartButton.setVisibility(View.VISIBLE);
+            }
+        }.execute();
+    }
+
+    void setStatus(String s) {
+        mStatus.setText(s);
+    }
 }

@@ -20,6 +20,11 @@
 
 package net.majorkernelpanic.streaming.rtp;
 
+import android.os.SystemClock;
+import android.util.Log;
+
+import net.majorkernelpanic.streaming.rtcp.SenderReport;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.DatagramPacket;
@@ -28,26 +33,22 @@ import java.net.MulticastSocket;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
-import net.majorkernelpanic.streaming.rtcp.SenderReport;
-import android.os.SystemClock;
-import android.util.Log;
-
 /**
  * A basic implementation of an RTP socket.
  * It implements a buffering mechanism, relying on a FIFO of buffers and a Thread.
  * That way, if a packetizer tries to send many packets too quickly, the FIFO will
  * grow and packets will be sent one by one smoothly.
  */
-public class RtpSocket implements Runnable {
+public class RtpSocketOld implements Runnable {
 
 	public static final String TAG = "RtpSocket";
 
 	/** Use this to use UDP for the transport protocol. */
 	public final static int TRANSPORT_UDP = 0x00;
-	
+
 	/** Use this to use TCP for the transport protocol. */
-	public final static int TRANSPORT_TCP = 0x01;	
-	
+	public final static int TRANSPORT_TCP = 0x01;
+
 	public static final int RTP_HEADER_LENGTH = 12;
 	public static final int MTU = 1300;
 
@@ -57,7 +58,7 @@ public class RtpSocket implements Runnable {
 	private long[] mTimestamps;
 
 	private SenderReport mReport;
-	
+
 	private Semaphore mBufferRequested, mBufferCommitted;
 	private Thread mThread;
 
@@ -70,17 +71,17 @@ public class RtpSocket implements Runnable {
 	private int mCount = 0;
 	private byte mTcpHeader[];
 	protected OutputStream mOutputStream = null;
-	
+
 	private AverageBitrate mAverageBitrate;
 
 	/**
 	 * This RTP socket implements a buffering mechanism relying on a FIFO of buffers and a Thread.
 	 * @throws IOException
 	 */
-	public RtpSocket() {
+	public RtpSocketOld() {
 		
 		mCacheSize = 0;
-		mBufferCount = 600; // TODO: readjust that when the FIFO is full
+		mBufferCount = 300; // TODO: readjust that when the FIFO is full 
 		mBuffers = new byte[mBufferCount][];
 		mPackets = new DatagramPacket[mBufferCount];
 		mReport = new SenderReport();
@@ -276,7 +277,7 @@ public class RtpSocket implements Runnable {
 		Statistics stats = new Statistics(50,3000);
 		try {
 			// Caches mCacheSize milliseconds of the stream in the FIFO.
-//			Thread.sleep(mCacheSize);
+			Thread.sleep(mCacheSize);
 			long delta = 0;
 			while (mBufferCommitted.tryAcquire(4,TimeUnit.SECONDS)) {
 				if (mOldTimestamp != 0) {

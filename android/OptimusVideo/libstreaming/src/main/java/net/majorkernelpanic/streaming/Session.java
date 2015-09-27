@@ -175,6 +175,14 @@ public class Session {
 
 	}
 
+	public void setVideoPort(int port) {
+		getVideoTrack().setDestinationPorts(port);
+	}
+
+	public void setAudioPort(int port) {
+        getAudioTrack().setDestinationPorts(port);
+    }
+
 	/** You probably don't need to use that directly, use the {@link SessionBuilder}. */
 	void addAudioTrack(AudioStream track) {
 		removeAudioTrack();

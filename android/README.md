@@ -4,4 +4,4 @@ Android Studio project provided.
 
 Uses https://github.com/fyhertz/libstreaming for streaming.
 
-Supports Android >= 5.0
+Supports Android >= 4.0
