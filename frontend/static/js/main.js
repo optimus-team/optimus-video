@@ -56,7 +56,7 @@ jQuery(document).ready(function(){
 			nextSides(projectsSlider);
 		} else {
 			$(video).addClass('is-visible');
-            videojs(video).play();
+           // videojs(video).play();
 		}
 	});
 
