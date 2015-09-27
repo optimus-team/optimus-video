@@ -10,7 +10,7 @@ jQuery(document).ready(function(){
     var BV = new $.BigVideo({container: $('#video-landing')});
 	BV.init();
 
-	    BV.show('../static/video/background.mp4',{ambient:true});
+	    BV.show('/static/video/background.mp4',{ambient:true});
 	
     
 	//if on desktop - set a width for the projectsSlider element
