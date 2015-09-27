@@ -9,11 +9,7 @@ jQuery(document).ready(function(){
 	
     var BV = new $.BigVideo({container: $('#video-landing')});
 	BV.init();
-	if (Modernizr.touch) {
-	    BV.show('static/img/back.jpg');
-	} else {
-	    BV.show('static/video/background.mp4',{ambient:true});
-	}
+    BV.show('static/video/background.mp4',{ambient:true});
     
 	//if on desktop - set a width for the projectsSlider element
 	setSliderContainer();
@@ -34,9 +30,9 @@ jQuery(document).ready(function(){
 		setTimeout(function(){
 			showProjectPreview(projectsSlider.children('li').eq(0));
 		}, 200);
-        if (!Modernizr.touch) {
+        
             BV.getPlayer().pause();
-        }
+        
 	});
 
 	intro.on('click', function(event) {
@@ -44,9 +40,9 @@ jQuery(document).ready(function(){
 		if( intro.hasClass('projects-visible') && !$(event.target).is('a[data-action="show-projects"]') ) {
 			intro.removeClass('projects-visible');
 			projectsContainer.removeClass('projects-visible');
-            if (!Modernizr.touch) {
+            
                 BV.getPlayer().play();
-            }
+            
 		}
 	});
 
