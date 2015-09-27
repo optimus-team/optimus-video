@@ -7,6 +7,14 @@ jQuery(document).ready(function(){
 
 	var resizing = false;
 	
+    var BV = new $.BigVideo({container: $('#video-landing')});
+	BV.init();
+	if (Modernizr.touch) {
+	    BV.show('../static/img/back.jpg');
+	} else {
+	    BV.show('../static/video/background.mp4',{ambient:true});
+	}
+    
 	//if on desktop - set a width for the projectsSlider element
 	setSliderContainer();
 	$(window).on('resize', function(){
@@ -19,7 +27,9 @@ jQuery(document).ready(function(){
 
 	//show the projects slider if user clicks the show-projects button
 	intro.on('click', 'a[data-action="show-projects"]', function(event) {
-		event.preventDefault();
+		event.preventDefault
+        var BV = new $.BigVideo({container: $('#video-landing')});
+        BV.pause();
 		intro.addClass('projects-visible');
 		projectsContainer.addClass('projects-visible');
 		//animate single project - entrance animation
@@ -198,17 +208,7 @@ jQuery(document).ready(function(){
 			'-o-transform': 'translateX(-' + translate + ')',
 			'transform': 'translateX(-' + translate + ')',
 		});
-	}
-    //initialize header video
-    //videojs('video_bg').play().volume(0);
-    var BV = new $.BigVideo({container: $('#video-landing')});
-	BV.init();
-	if (Modernizr.touch) {
-	    BV.show('../static/img/back.jpg');
-	} else {
-	    BV.show('../static/video/background.mp4',{ambient:true});
-	}
-    
+	}    
     //open popup
 	$('.cd-popup-trigger').on('click', function(event){
 		event.preventDefault();
