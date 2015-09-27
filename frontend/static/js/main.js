@@ -28,21 +28,21 @@ jQuery(document).ready(function(){
 	//show the projects slider if user clicks the show-projects button
 	intro.on('click', 'a[data-action="show-projects"]', function(event) {
 		event.preventDefault
-        BV.getPlayer().pause();
 		intro.addClass('projects-visible');
 		projectsContainer.addClass('projects-visible');
 		//animate single project - entrance animation
 		setTimeout(function(){
 			showProjectPreview(projectsSlider.children('li').eq(0));
 		}, 200);
+        BV.getPlayer().pause();
 	});
 
 	intro.on('click', function(event) {
 		//projects slider is visible - hide slider and show the intro panel
 		if( intro.hasClass('projects-visible') && !$(event.target).is('a[data-action="show-projects"]') ) {
 			intro.removeClass('projects-visible');
-            BV.getPlayer().play();
 			projectsContainer.removeClass('projects-visible');
+            BV.getPlayer().play();
 		}
 	});
 
