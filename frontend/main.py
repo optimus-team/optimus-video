@@ -65,7 +65,7 @@ class MainHandler(BaseHandler):
 
 class HomeHandler(BaseHandler):
 	def get(self):
-		files = sorted(glob.glob("static/video/*.mp4"))
+		files = sorted(glob.glob("static/video/*.mp4"),reverse = True)
 		data = dict()
 		data["files"] = []
 		for file in files:
