@@ -627,7 +627,12 @@ fontawesome
     z-index: -1;
     background-color: rgba(0,0,0,0.4)
 }
-
+.cd-popup-trigger{
+    position: absolute;
+    top: 30px;
+    right: 50px; 
+    color: $color-3;
+}
 .cd-popup {
 	position: fixed;
 	left: 0;
