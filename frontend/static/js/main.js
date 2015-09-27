@@ -28,8 +28,7 @@ jQuery(document).ready(function(){
 	//show the projects slider if user clicks the show-projects button
 	intro.on('click', 'a[data-action="show-projects"]', function(event) {
 		event.preventDefault
-        var BV = new $.BigVideo({container: $('#video-landing')});
-        BV.pause();
+        BV.getPlayer().pause();
 		intro.addClass('projects-visible');
 		projectsContainer.addClass('projects-visible');
 		//animate single project - entrance animation
@@ -42,6 +41,7 @@ jQuery(document).ready(function(){
 		//projects slider is visible - hide slider and show the intro panel
 		if( intro.hasClass('projects-visible') && !$(event.target).is('a[data-action="show-projects"]') ) {
 			intro.removeClass('projects-visible');
+            BV.getPlayer().play();
 			projectsContainer.removeClass('projects-visible');
 		}
 	});
