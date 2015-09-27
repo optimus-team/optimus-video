@@ -34,7 +34,9 @@ jQuery(document).ready(function(){
 		setTimeout(function(){
 			showProjectPreview(projectsSlider.children('li').eq(0));
 		}, 200);
-        BV.getPlayer().pause();
+        if (!Modernizr.touch) {
+            BV.getPlayer().pause();
+        }
 	});
 
 	intro.on('click', function(event) {
@@ -42,7 +44,9 @@ jQuery(document).ready(function(){
 		if( intro.hasClass('projects-visible') && !$(event.target).is('a[data-action="show-projects"]') ) {
 			intro.removeClass('projects-visible');
 			projectsContainer.removeClass('projects-visible');
-            BV.getPlayer().play();
+            if (!Modernizr.touch) {
+                BV.getPlayer().play();
+            }
 		}
 	});
 
