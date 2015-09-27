@@ -95,6 +95,7 @@ Intro page
 	z-index: 2;
 	height: 100vh;
 	width: 100%;
+    overflow: hidden;
 	background-color: tint($color-1, 10%);
 	/* used to vertical align its content */
 	display: table;
