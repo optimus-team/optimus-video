@@ -9,11 +9,9 @@ jQuery(document).ready(function(){
 	
     var BV = new $.BigVideo({container: $('#video-landing')});
 	BV.init();
-	if (Modernizr.touch) {
-	    BV.show('../static/img/back.jpg');
-	} else {
+
 	    BV.show('../static/video/background.mp4',{ambient:true});
-	}
+	
     
 	//if on desktop - set a width for the projectsSlider element
 	setSliderContainer();
